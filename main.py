@@ -31,10 +31,6 @@ class MyFirstGUI:
         self.plot_button = Button(master, text="Plot", command=self.plot)
         self.plot_button.pack()
 
-        
-        #self.clear_button = Button(master, text="Clear", command=self.clear)
-        #self.clear_button.pack()
-
         self.counter =0
 
     def askDirectoryPath(self):
@@ -64,18 +60,17 @@ class MyFirstGUI:
         if self.counter >0:
             self.canvas.get_tk_widget().pack_forget()
         
-        # the figure that will contain the plot 
+         
         self.fig = plt.figure(figsize=(15,15),dpi=1000)
 
         
     
-        # list of squares 
+        
         
         self.img_org = self.readDicom().pixel_array
-        # adding the subplot 
+        
         self.plot1 = self.fig.add_subplot(241)
-        #self.plot1.set_xlabel("deneme", fontsize=12)
-        # plotting the graph 
+        
 
         self.plot1.set_title("Input Image",fontdict={"fontsize":2},y=.8)
         self.plot1.imshow(self.img_org, cmap= "gray") 
@@ -94,7 +89,7 @@ class MyFirstGUI:
         self.plot2.axes.yaxis.set_visible(False)
         
         
-        # Gaussian Filter
+        # Gaussian Filtresi
 
        
         self.plot3 = self.fig.add_subplot(245)
@@ -102,20 +97,17 @@ class MyFirstGUI:
 
         
         self.img = cv2.blur(self.img_org,(8,8))
-        #plt.suptitle("Implementation of Gaussian Filter",y=.9 ,size=16)
-
-        #self.plot3.imshow(img,cmap="gray"),plt.title('Original')
-        #self.plot3.xticks([]), self.plot3.yticks([])
+        
 
         self.plot3.set_title("Gaussian Blur",fontdict={"fontsize":2},y=.8)
         self.plot3.imshow(self.img,cmap="gray")
-        #self.plot4.xticks([]), self.plot4.yticks([])
+
 
         self.plot3.axes.xaxis.set_visible(False)
         self.plot3.axes.yaxis.set_visible(False)
         
 
-        # Thresholding
+        # eşikleme
 
         from skimage.filters import threshold_mean
         
@@ -137,8 +129,7 @@ class MyFirstGUI:
         self.kernel = np.ones((16,16),np.uint8)
         self.erosion = cv2.morphologyEx(self.img, cv2.MORPH_OPEN, self.kernel)
         self.plot5 = self.fig.add_subplot(122)
-        #self.plot6 = self.ax[0,2]
-        #self.img = exposure.equalize_adapthist(self.masked_image)
+      
         self.plot5.set_title("Output Image",fontdict={"fontsize":2},y=.92)
         self.plot5.imshow(self.erosion , cmap="gray")
 
@@ -147,16 +138,12 @@ class MyFirstGUI:
         self.plot5.axes.yaxis.set_visible(False)
 
 
-        #self.plot6.axes.xaxis.set_visible(False)
-        #self.plot6.axes.yaxis.set_visible(False)
-
-        # containing the Matplotlib figure 
         self.canvas = FigureCanvasTkAgg(self.fig, 
                                 master = root)   
         self.canvas.draw() 
         
     
-        # placing the canvas on the Tkinter window 
+   
         self.canvas.get_tk_widget().pack() 
     
         self.fig.canvas.flush_events()
